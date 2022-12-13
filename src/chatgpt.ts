@@ -41,6 +41,14 @@ const configuration = new Configuration({
 // OpenAI instance
 const openai = new OpenAIApi(configuration);
 
+// ChatGPT configuration
+const ChatGPTConfig = {
+  model: "text-davinci-003",
+  temperature: 0.6,
+  max_tokens: 2000,
+  error_message: "🤖️：麦扣的机器人摆烂了，请稍后再试～",
+};
+
 // message size for a single reply by the bot
 const SINGLE_MESSAGE_MAX_SIZE = 500;
 
@@ -114,16 +122,15 @@ export class ChatGPTBot {
 
   // send question to ChatGPT with OpenAI API and get answer
   async onChatGPT(inputMessage: string): Promise<string> {
-    const gptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
     const response = await openai.createCompletion({
-      model: "text-davinci-003",
       prompt: inputMessage,
-      temperature: 0.6,
-      max_tokens: 2000,
+      model: ChatGPTConfig.model,
+      temperature: ChatGPTConfig.temperature,
+      max_tokens: ChatGPTConfig.max_tokens,
     });
     // use OpenAI API to get ChatGPT reply message
     const chatgptReplyMessage =
-      response?.data?.choices[0]?.text?.trim() || gptErrorMessage;
+      response?.data?.choices[0]?.text?.trim() || ChatGPTConfig.error_message;
     console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
     return chatgptReplyMessage;
   }
