@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import fs from "fs";
 import { parse } from "yaml";
 import { IConfig } from "./interface";
