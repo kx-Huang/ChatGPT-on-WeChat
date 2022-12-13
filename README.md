@@ -48,7 +48,7 @@ docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 
 ### Deploy on Cloud
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/TnPmWL?referralCode=D6wD0x)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/zKIfYk?referralCode=D6wD0x)
 
 **Please note:**
 
