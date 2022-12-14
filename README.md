@@ -4,12 +4,27 @@ Turn your WeChat into an auto-reply bot powered by ChatGPT!
 
 ![Your Chat Bot in Group Chat!](doc/img/demo.png)
 
-## 0. Acknowledgement & Features
+## Acknowledgement & Features <!-- omit in toc -->
 
-This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt), but with a major adjustment: using the official OpenAI `API Key` to replace the previous pesudo-browser method, so it has the following features:
+This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) and [Wechaty](https://github.com/wechaty/wechaty) SDK, but with a major adjustment: using the official OpenAI `API Key` to replace the previous pesudo-browser method, so it has the following features:
 
 - More stable and robust connection to `ChatGPT`
 - Can be deployed on cloud servers with no connection error (which the aforementioned project currently can't)
+
+## 0. Table of Content <!-- omit in toc -->
+
+- [1. How to Deploy this Bot?](#1-how-to-deploy-this-bot)
+  - [1.1 Deploy in Local](#11-deploy-in-local)
+    - [1.1.1 Configure Environment Variables](#111-configure-environment-variables)
+    - [1.1.2 Setup the Docker](#112-setup-the-docker)
+  - [1.2 Deploy on Cloud](#12-deploy-on-cloud)
+- [2. How to Link to your WeChat?](#2-how-to-link-to-your-wechat)
+- [3. Any Fancy Advanced Settings?](#3-any-fancy-advanced-settings)
+  - [3.1 Config `ChatGPT` Models](#31-config-chatgpt-models)
+  - [3.2 Config `ChatGPT` Features](#32-config-chatgpt-features)
+  - [3.3 Config Auto Reply in Error](#33-config-auto-reply-in-error)
+  - [3.4 Add Customized Task Handler](#34-add-customized-task-handler)
+- [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
 
 ## 1. How to Deploy this Bot?
 
@@ -33,7 +48,7 @@ chatgptTriggerKeyword: "<your_keyword>"
 - `openaiOrganizationID` is optional, which can be found in the [**Settings Page** in your Open AI account](https://beta.openai.com/account/org-settings)
 - `chatgptTriggerKeyword` is the keyword which can trigger auto-reply:
   - In private chat, the message starts with it will trigger auto-reply
-  - In group chat, the message starts with `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
+  - In group chat, the message starts with `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
 - `chatgptTriggerKeyword` can be empty string, which means:
   - In private chat, every messages will trigger auto-reply
   - In group chat, only "@ the bot" will trigger auto-reply
@@ -52,15 +67,15 @@ export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
 
 1. Setup Docker Image
 
-  ```bash
-  docker build -t chatgpt-on-wechat .
-  ```
+```bash
+docker build -t chatgpt-on-wechat .
+```
 
 2. Setup Docker Container
 
-  ```bash
-  docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
-  ```
+```bash
+docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
+```
 
 ---
 
