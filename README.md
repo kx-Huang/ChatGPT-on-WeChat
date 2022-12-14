@@ -15,16 +15,19 @@ This project is implemented based on [this amazing project](https://github.com/f
 
 - [1. How to Deploy this Bot?](#1-how-to-deploy-this-bot)
   - [1.1 Deploy in Local](#11-deploy-in-local)
-    - [1.1.1 Configure Environment Variables](#111-configure-environment-variables)
-    - [1.1.2 Setup the Docker](#112-setup-the-docker)
+    - [1.1.1 Get your OpenAI API keys for `ChatGPT`](#111-get-your-openai-api-keys-for-chatgpt)
+    - [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
+    - [1.1.3 Setup the Docker](#113-setup-the-docker)
+    - [1.1.4 Login your WeChat](#114-login-your-wechat)
   - [1.2 Deploy on Cloud](#12-deploy-on-cloud)
-- [2. How to Link to your WeChat?](#2-how-to-link-to-your-wechat)
-- [3. Any Fancy Advanced Settings?](#3-any-fancy-advanced-settings)
-  - [3.1 Config `ChatGPT` Models](#31-config-chatgpt-models)
-  - [3.2 Config `ChatGPT` Features](#32-config-chatgpt-features)
-  - [3.3 Config Auto Reply in Error](#33-config-auto-reply-in-error)
-  - [3.4 Add Customized Task Handler](#34-add-customized-task-handler)
-- [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
+    - [1.2.1 Configure on `Railway`](#121-configure-on-railway)
+    - [1.2.2 Deploy \& Login on `Railway`](#122-deploy--login-on-railway)
+- [2. Any Fancy Advanced Settings?](#2-any-fancy-advanced-settings)
+  - [2.1 Config `ChatGPT` Models](#21-config-chatgpt-models)
+  - [2.2 Config `ChatGPT` Features](#22-config-chatgpt-features)
+  - [2.3 Config Auto Reply in Error](#23-config-auto-reply-in-error)
+  - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
+- [3. How to Contribute to this Project?](#3-how-to-contribute-to-this-project)
 
 ## 1. How to Deploy this Bot?
 
@@ -32,7 +35,14 @@ You can [deploy in local](#11-deploy-in-local) or [deploy on cloud](#12-deploy-o
 
 ### 1.1 Deploy in Local
 
-#### 1.1.1 Configure Environment Variables
+#### 1.1.1 Get your OpenAI API keys for `ChatGPT`
+
+- `openaiApiKey` can be generated in the [**API Keys Page** in your OpenAI account](https://beta.openai.com/account/api-keys)
+- `openaiOrganizationID` is optional, which can be found in the [**Settings Page** in your Open AI account](https://beta.openai.com/account/org-settings)
+
+---
+
+#### 1.1.2 Configure Environment Variables
 
 You can copy the template `config.yaml.example` into a new file `config.yaml`, and paste the configurations:
 
@@ -42,17 +52,6 @@ openaiOrganizationID: "<your_organization_id>"
 chatgptTriggerKeyword: "<your_keyword>"
 ```
 
-**Please note**:
-
-- `openaiApiKey` can be generated in the [**API Keys Page** in your OpenAI account](https://beta.openai.com/account/api-keys)
-- `openaiOrganizationID` is optional, which can be found in the [**Settings Page** in your Open AI account](https://beta.openai.com/account/org-settings)
-- `chatgptTriggerKeyword` is the keyword which can trigger auto-reply:
-  - In private chat, the message starts with it will trigger auto-reply
-  - In group chat, the message starts with `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
-- `chatgptTriggerKeyword` can be empty string, which means:
-  - In private chat, every messages will trigger auto-reply
-  - In group chat, only "@ the bot" will trigger auto-reply
-
 Or you can export the environment variables listed in `.env.sample` to your system, which is a more encouraged method to keep your `OpenAI API Key` safe:
 
 ```bash
@@ -61,9 +60,18 @@ export OPENAI_ORGANIZATION_KEY="org-XXXXXXXXXXXXXXX"
 export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
 ```
 
+**Please note:**
+
+- `chatgptTriggerKeyword` is the keyword which can trigger auto-reply:
+  - In private chat, the message starts with it will trigger auto-reply
+  - In group chat, the message starts with `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
+- `chatgptTriggerKeyword` can be empty string, which means:
+  - In private chat, every messages will trigger auto-reply
+  - In group chat, only "@ the bot" will trigger auto-reply
+
 ---
 
-#### 1.1.2 Setup the Docker
+#### 1.1.3 Setup the Docker
 
 1. Setup Docker Image
 
@@ -79,19 +87,9 @@ docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 
 ---
 
-### 1.2 Deploy on Cloud
+#### 1.1.4 Login your WeChat
 
-Click the button below to fork this repo and deploy with Railway!
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/zKIfYk?referralCode=D6wD0x)
-
-**Please note:**
-
-Make sure the environment variables are set in RailWay instead of writing directly in `config.yaml`. It's really **NOT** recommended to implicitly write out your `OpenAI API Key` in public repo. Anyone with your key can get access to the OpenAI ChatGPT API services, and it's possbile for you to lose money if you pay for that.
-
-## 2. How to Link to your WeChat?
-
-Once you deploy the bot successfully, just follow the `Deploy Logs` or `Console` prompt carefully:
+Once you deploy the bot successfully, just follow the `terminal` or `Logs` in Docker container prompt carefully:
 
 1. Scan the QR Code with mobile WeChat
 2. Click "Accpet" to allow desktop login (where our bot stays)
@@ -99,9 +97,51 @@ Once you deploy the bot successfully, just follow the `Deploy Logs` or `Console`
 
 🤖 **Enjoy your powerful chat bot!** 🤖
 
-## 3. Any Fancy Advanced Settings?
+---
 
-### 3.1 Config `ChatGPT` Models
+### 1.2 Deploy on Cloud
+
+Click the button below to fork this repo and deploy with Railway!
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/zKIfYk?referralCode=D6wD0x)
+
+---
+
+#### 1.2.1 Configure on `Railway`
+
+Fill in the following blanks:
+
+1. Your forked repo name (can be any name you like)
+2. Choose make it private or not (also up to you)
+3. Environment variables (for how to get OpenAI API keys, please refer to [1.1.1 Get your OpenAI API keys for `ChatGPT`](#111-get-your-openai-api-keys-for-chatgpt)
+
+![Railway Config](doc/img/Railway_config.png)
+
+**Please note:**
+
+Make sure the environment variables are set in RailWay instead of writing directly in `config.yaml`. It's really **NOT** recommended to implicitly write out your `OpenAI API Key` in public repo. Anyone with your key can get access to the OpenAI ChatGPT API services, and it's possbile for you to lose money if you pay for that.
+
+---
+
+#### 1.2.2 Deploy & Login on `Railway`
+
+The deploy process is automatic. It may take a few minutes for the first time. As you see the `Success`, click the tab to see the details. (which is your secret WeChat console!)
+
+![Railway Deploy](doc/img/Railway_deploy.png)
+
+Click `Deply Logs` and you will see everything is setting up, wait for a QR Code to pop up. Scan it as if you are login to your desktop WeChat, and click "Accpet" on your mobile WeChat.
+
+![Railway Scan QR Code](doc/img/Railway_QRCode.png)
+
+Finally, everything is good to go! You will see the logs when people sending you messagem, and whenever the ChatGPT bot is auto-triggered to reply.
+
+![Railway Log](doc/img/Railway_log.png)
+
+🤖 **Enjoy your powerful chat bot!** 🤖
+
+## 2. Any Fancy Advanced Settings?
+
+### 2.1 Config `ChatGPT` Models
 
 You can change whatever `ChatGPT` Models you like to handle task at different capability & time-consumption trade-off. (e.g. model with better capability costs more time to respond)
 
@@ -127,7 +167,7 @@ For more details, please refer to [OpenAI Models Doc](https://beta.openai.com/do
 
 ---
 
-### 3.2 Config `ChatGPT` Features
+### 2.2 Config `ChatGPT` Features
 
 You can change whatever `ChatGPT` features you like to handle different types of tasks. (e.g. complete text, edit text, generate image...)
 
@@ -150,7 +190,7 @@ For more details, please refer to [OpenAI API Doc](https://beta.openai.com/docs/
 
 ---
 
-### 3.3 Config Auto Reply in Error
+### 2.3 Config Auto Reply in Error
 
 When `ChatGPT` encounters some errors (e.g. over-crowded traffic, no authorization, ...), the chat bot will auto-reply the pre-configured message.
 
@@ -162,7 +202,7 @@ const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后�
 
 ---
 
-### 3.4 Add Customized Task Handler
+### 2.4 Add Customized Task Handler
 
 You can add your own task handlers to expand the ability of this chat bot!
 
@@ -178,6 +218,6 @@ if (message.text().startsWith("Hello")) {
 
 Of course, stuffing all handlers in `main` function is really a **BAD** habit in coding. As a result, we will fix this in future updates to do logic separation.
 
-## 4. How to Contribute to this Project?
+## 3. How to Contribute to this Project?
 
 You can raise some issues, fork this repo, commit your code, submit pull request, and after code review, we can merge your patch. I'm really looking forward to develop more interesting features!
