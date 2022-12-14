@@ -29,7 +29,7 @@ async function main() {
     .on("message", async (message: any) => {
       try {
         console.log(`📨 ${message}`);
-        // add your own offline task handler over here to expand the bot ability!
+        // add your own task handlers over here to expand the bot ability!
         // e.g. if a message starts with "Hello", the bot sends "World!"
         if (message.text().startsWith("Hello")) {
           await message.say("World!");
