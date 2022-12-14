@@ -1,0 +1,3 @@
+openaiApiKey: "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+openaiOrganizationID: "org-XXXXXXXXXXXXXXX"
+chatgptTriggerKeyword: "Hi bot:"
