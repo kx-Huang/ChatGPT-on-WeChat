@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { Config } from "./config.js";
 import { Message } from "wechaty";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
@@ -119,24 +118,23 @@ export class ChatGPTBot {
 
   // send question to ChatGPT with OpenAI API and get answer
   async onChatGPT(inputMessage: string): Promise<string> {
-    // config OpenAI API request body
-    const response = await this.OpenAI.createCompletion({
-      ...ChatGPTModelConfig,
-      prompt: inputMessage,
-    });
-    // use OpenAI API to get ChatGPT reply message
     try {
+      // config OpenAI API request body
+      const response = await this.OpenAI.createCompletion({
+        ...ChatGPTModelConfig,
+        prompt: inputMessage,
+      });
+      // use OpenAI API to get ChatGPT reply message
       const chatgptReplyMessage = response?.data?.choices[0]?.text?.trim();
       console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
       return chatgptReplyMessage;
-    } catch (e) {
-      const error = e as AxiosError;
-      const errorResponse = error?.response;
+    } catch (e: any) {
+      const errorResponse = e?.response;
       const errorCode = errorResponse?.status;
       const errorStatus = errorResponse?.statusText;
-      // const errorMessage = errorResponse?.data?.error?.message;
+      const errorMessage = errorResponse?.data?.error?.message;
       console.log(`❌ Code ${errorCode}: ${errorStatus}`);
-      // console.log(`❌ ${errorMessage}`);
+      console.log(`❌ ${errorMessage}`);
       return chatgptErrorMessage;
     }
   }
