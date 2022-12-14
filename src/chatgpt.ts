@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Config } from "./config.js";
 import { Message } from "wechaty";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
@@ -23,38 +24,25 @@ enum MessageType {
   Post = 16, // Moment, Channel, Tweet, etc
 }
 
-const ErrorCode2Message: Record<string, string> = {
-  "429":
-    "OpenAI 服务器限流，请稍后再试 | OpenAI server's traffic was limited, please try later",
-  "500":
-    "OpenAI 服务器繁忙，请稍后再试 | OpenAI server is busy, please try later",
-  "503":
-    "OpenAI 服务器繁忙，请稍后再试 | OpenAI server is busy, please try later",
-  unknown: "未知错误，请查阅日志 | Unknown Error, please refer to the log",
-};
-
-// OpenAI API configuration
-const configuration = new Configuration({
-  organization: Config.openaiOrganizationID,
-  apiKey: Config.openaiApiKey,
-});
-// OpenAI instance
-const openai = new OpenAIApi(configuration);
-
 // ChatGPT configuration
-const ChatGPTConfig = {
-  model: "text-davinci-003",
-  temperature: 0.6,
+const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
+// ChatGPT model configuration
+// Please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
+const ChatGPTModelConfig = {
+  // add your ChatGPT model parameters below
+  model: "text-davinci-003", // this field is required
+  temperature: 0.9,
   max_tokens: 2000,
-  error_message: "🤖️：麦扣的机器人摆烂了，请稍后再试～",
 };
 
 // message size for a single reply by the bot
 const SINGLE_MESSAGE_MAX_SIZE = 500;
 
 export class ChatGPTBot {
-  chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
   botName: string = "";
+  chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
+  OpenAIConfig: any;
+  OpenAI: any;
 
   setBotName(botName: string) {
     this.botName = botName;
@@ -64,9 +52,18 @@ export class ChatGPTBot {
     return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
   }
 
+  // configure API with model API keys and run a initial test
   async startGPTBot() {
-    console.debug(`🤖️ Start GPT Bot Config is:${JSON.stringify(Config)}`);
-    console.debug(`🤖️ Start GPT Bot Success, ready to handle message!`);
+    // OpenAI Account configuration
+    this.OpenAIConfig = new Configuration({
+      organization: Config.openaiOrganizationID,
+      apiKey: Config.openaiApiKey,
+    });
+    // OpenAI API instance
+    this.OpenAI = new OpenAIApi(this.OpenAIConfig);
+    // Run an initial test to confirm API works fine
+    const chatgptReplyMessage = await this.onChatGPT("Say Hello World");
+    console.log(`🤖️ ChatGPT Bot Start Success, ready to handle message!`);
   }
 
   // get clean message by removing reply separater and group mention characters
@@ -122,17 +119,26 @@ export class ChatGPTBot {
 
   // send question to ChatGPT with OpenAI API and get answer
   async onChatGPT(inputMessage: string): Promise<string> {
-    const response = await openai.createCompletion({
+    // config OpenAI API request body
+    const response = await this.OpenAI.createCompletion({
+      ...ChatGPTModelConfig,
       prompt: inputMessage,
-      model: ChatGPTConfig.model,
-      temperature: ChatGPTConfig.temperature,
-      max_tokens: ChatGPTConfig.max_tokens,
     });
     // use OpenAI API to get ChatGPT reply message
-    const chatgptReplyMessage =
-      response?.data?.choices[0]?.text?.trim() || ChatGPTConfig.error_message;
-    console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
-    return chatgptReplyMessage;
+    try {
+      const chatgptReplyMessage = response?.data?.choices[0]?.text?.trim();
+      console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
+      return chatgptReplyMessage;
+    } catch (e) {
+      const error = e as AxiosError;
+      const errorResponse = error?.response;
+      const errorCode = errorResponse?.status;
+      const errorStatus = errorResponse?.statusText;
+      // const errorMessage = errorResponse?.data?.error?.message;
+      console.log(`❌ Code ${errorCode}: ${errorStatus}`);
+      // console.log(`❌ ${errorMessage}`);
+      return chatgptErrorMessage;
+    }
   }
 
   // reply with the segmented messages from a single-long message
@@ -164,7 +170,7 @@ export class ChatGPTBot {
   async onGroupMessage(text: string, room: RoomInterface) {
     // get reply from ChatGPT
     const chatgptReplyMessage = await this.onChatGPT(text);
-
+    // the reply consist of: original text and bot reply
     const result = `${text}\n ---------- \n ${chatgptReplyMessage}`;
     await this.reply(room, result);
   }
@@ -178,7 +184,7 @@ export class ChatGPTBot {
     const isPrivateChat = !room;
     // do nothing if the message:
     //    1. is irrelevant (e.g. voice, video, location...), or
-    //    2. doesn't trigger bot (e.g. no or wrong trigger-word)
+    //    2. doesn't trigger bot (e.g. wrong trigger-word)
     if (
       this.isNonsense(talker, messageType, rawText) ||
       !this.triggerGPTMessage(rawText, isPrivateChat)
