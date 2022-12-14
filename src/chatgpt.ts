@@ -3,6 +3,22 @@ import { Message } from "wechaty";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
 import { Configuration, OpenAIApi } from "openai";
 
+// ChatGPT error response configuration
+const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
+
+// ChatGPT model configuration
+// please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
+const ChatGPTModelConfig = {
+  // this model field is required
+  model: "text-davinci-003",
+  // add your ChatGPT model parameters below
+  temperature: 0.9,
+  max_tokens: 2000,
+};
+
+// message size for a single reply by the bot
+const SINGLE_MESSAGE_MAX_SIZE = 500;
+
 enum MessageType {
   Unknown = 0,
   Attachment = 1, // Attach(6),
@@ -23,30 +39,17 @@ enum MessageType {
   Post = 16, // Moment, Channel, Tweet, etc
 }
 
-// ChatGPT configuration
-const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
-// ChatGPT model configuration
-// Please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
-const ChatGPTModelConfig = {
-  // add your ChatGPT model parameters below
-  model: "text-davinci-003", // this field is required
-  temperature: 0.9,
-  max_tokens: 2000,
-};
-
-// message size for a single reply by the bot
-const SINGLE_MESSAGE_MAX_SIZE = 500;
-
 export class ChatGPTBot {
   botName: string = "";
   chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
-  OpenAIConfig: any;
-  OpenAI: any;
+  OpenAIConfig: any;  // OpenAI API key
+  OpenAI: any;        // OpenAI API instance
 
   setBotName(botName: string) {
     this.botName = botName;
   }
 
+  // get trigger keyword in group chat: (@Name <keyword>)
   get chatGroupTriggerKeyword(): string {
     return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
   }
