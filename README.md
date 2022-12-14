@@ -40,15 +40,15 @@ chatgptTriggerKeyword: "<your_keyword>"
 
 1. Setup Docker Image
 
-    ```bash
-    docker build -t chatgpt-on-wechat .
-    ```
+  ```bash
+  docker build -t chatgpt-on-wechat .
+  ```
 
 2. Setup Docker Container
 
-    ```bash
-    docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
-    ```
+  ```bash
+  docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
+  ```
 
 ---
 
