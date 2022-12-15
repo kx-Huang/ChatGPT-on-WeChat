@@ -63,11 +63,11 @@ export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
 **Please note:**
 
 - `chatgptTriggerKeyword` is the keyword which can trigger auto-reply:
-  - In private chat, the message starts with it will trigger auto-reply
-  - In group chat, the message starts with `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
-- `chatgptTriggerKeyword` can be empty string, which means:
-  - In private chat, every messages will trigger auto-reply
-  - In group chat, only "@ the bot" will trigger auto-reply
+  - In private chat, the message **starts with** it will trigger auto-reply
+  - In group chat, the message **starts with** `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
+- `chatgptTriggerKeyword` can be **empty string**, which means:
+  - In private chat, **every messages** will trigger auto-reply
+  - In group chat, only **"@ the bot"** will trigger auto-reply
 
 ---
 
@@ -92,7 +92,7 @@ docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 Once you deploy the bot successfully, just follow the `terminal` or `Logs` in Docker container prompt carefully:
 
 1. Scan the QR Code with mobile WeChat
-2. Click "Accpet" to allow desktop login (where our bot stays)
+2. Click "Log in" to allow desktop login (where our bot stays)
 3. Wait a few seconds and start chatting!
 
 🤖 **Enjoy your powerful chat bot!** 🤖
@@ -119,7 +119,7 @@ Fill in the following blanks:
 
 **Please note:**
 
-Make sure the environment variables are set in RailWay instead of writing directly in `config.yaml`. It's really **NOT** recommended to implicitly write out your `OpenAI API Key` in public repo. Anyone with your key can get access to the OpenAI ChatGPT API services, and it's possbile for you to lose money if you pay for that.
+Make sure the environment variables are set in RailWay instead of writing directly in `config.yaml`. It's really **NOT** recommended to implicitly write out your `OpenAI API Key` in public repo. Anyone with your key can get access to the OpenAI API services, and it's possbile for you to lose money if you pay for that.
 
 ---
 
@@ -129,7 +129,7 @@ The deploy process is automatic. It may take a few minutes for the first time. A
 
 ![Railway Deploy](doc/img/Railway_deploy.png)
 
-Click `Deply Logs` and you will see everything is setting up, wait for a QR Code to pop up. Scan it as if you are login to your desktop WeChat, and click "Accpet" on your mobile WeChat.
+Click `Deply Logs` and you will see everything is setting up, wait for a QR Code to pop up. Scan it as if you are login to your desktop WeChat, and click "Log in" on your mobile WeChat.
 
 ![Railway Scan QR Code](doc/img/Railway_QRCode.png)
 
