@@ -4,7 +4,7 @@ import { ContactInterface, RoomInterface } from "wechaty/impls";
 import { Configuration, OpenAIApi } from "openai";
 
 // ChatGPT error response configuration
-const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
+const chatgptErrorMessage = "🤖️：AI机器人摆烂了，请稍后再试～";
 
 // ChatGPT model configuration
 // please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
@@ -47,7 +47,7 @@ export class ChatGPTBot {
 
   // Chatgpt fine-tune for being a chatbot (guided by OpenAI official document)
   applyContext(text: string): string {
-    return `Your are an artificial intelligence bot from a company called "OpenAI". Your primary tasks are chatting with users and answering their questions. If the user says "${text}", you will say:`;
+    return `You are an artificial intelligence bot from a company called "OpenAI". Your primary tasks are chatting with users and answering their questions. If the user says "${text}", you will say:`;
   }
 
   setBotName(botName: string) {
