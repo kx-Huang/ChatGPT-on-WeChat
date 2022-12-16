@@ -42,8 +42,13 @@ enum MessageType {
 export class ChatGPTBot {
   botName: string = "";
   chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
-  OpenAIConfig: any;  // OpenAI API key
-  OpenAI: any;        // OpenAI API instance
+  OpenAIConfig: any; // OpenAI API key
+  OpenAI: any; // OpenAI API instance
+
+  // Chatgpt fine-tune for being a chatbot (guided by OpenAI official document)
+  applyContext(text: string): string {
+    return `Your are an artificial intelligence bot from a company called "OpenAI". Your primary tasks are chatting with users and answering their questions. If the user says "${text}", you will say:`;
+  }
 
   setBotName(botName: string) {
     this.botName = botName;
@@ -64,7 +69,7 @@ export class ChatGPTBot {
     // OpenAI API instance
     this.OpenAI = new OpenAIApi(this.OpenAIConfig);
     // Run an initial test to confirm API works fine
-    const chatgptReplyMessage = await this.onChatGPT("Say Hello World");
+    await this.onChatGPT("Say Hello World");
     console.log(`🤖️ ChatGPT Bot Start Success, ready to handle message!`);
   }
 
@@ -120,7 +125,8 @@ export class ChatGPTBot {
   }
 
   // send question to ChatGPT with OpenAI API and get answer
-  async onChatGPT(inputMessage: string): Promise<string> {
+  async onChatGPT(text: string): Promise<string> {
+    const inputMessage = this.applyContext(text);
     try {
       // config OpenAI API request body
       const response = await this.OpenAI.createCompletion({
@@ -168,7 +174,7 @@ export class ChatGPTBot {
   }
 
   // reply to group message
-  async onGroupMessage(text: string, room: RoomInterface) {
+  async onGroupMessage(room: RoomInterface, text: string) {
     // get reply from ChatGPT
     const chatgptReplyMessage = await this.onChatGPT(text);
     // the reply consist of: original text and bot reply
@@ -198,7 +204,7 @@ export class ChatGPTBot {
     if (isPrivateChat) {
       return await this.onPrivateMessage(talker, text);
     } else {
-      return await this.onGroupMessage(text, room);
+      return await this.onGroupMessage(room, text);
     }
   }
 }
