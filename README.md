@@ -1,21 +1,21 @@
-# ChatGPT on WeChat! ![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg) [![wakatime](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394.svg)](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394) ![](https://visitor-badge.glitch.me/badge?page_id=kx-Huang.ChatGPT-on-WeChat&left_color=gray&right_color=blue) <!-- omit in toc -->
+# OpenAI on WeChat! ![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg) [![wakatime](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394.svg)](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394) ![](https://visitor-badge.glitch.me/badge?page_id=kx-Huang.ChatGPT-on-WeChat&left_color=gray&right_color=blue) <!-- omit in toc -->
 
-Turn your WeChat into an auto-reply bot powered by ChatGPT!
+🤖️ Turn your WeChat into an auto-reply chatbot powered by OpenAI [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️
 
-![Your Chat Bot in Group Chat!](doc/img/demo.png)
+![Your Chatbot in Group Chat!](doc/img/demo.png)
 
 ## Acknowledgement & Features <!-- omit in toc -->
 
-This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) and [Wechaty](https://github.com/wechaty/wechaty) SDK, but with a major adjustment: using the official OpenAI `API Key` to replace the previous pesudo-browser method, so it has the following features:
+This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) that I contibuted before, with [`Wechaty SDK`](https://github.com/wechaty/wechaty) and `OpenAI API Key`, we achieve:
 
-- More stable and robust connection to `ChatGPT`
-- Can be deployed on cloud servers with no connection error (which the aforementioned project currently can't)
+- fast and robust connection to dozens of `AI model` with different features
+- stable and persistent deployment on cloud servers `Railway`
 
 ## 0. Table of Content <!-- omit in toc -->
 
 - [1. How to Deploy this Bot?](#1-how-to-deploy-this-bot)
   - [1.1 Deploy in Local](#11-deploy-in-local)
-    - [1.1.1 Get your OpenAI API keys for `ChatGPT`](#111-get-your-openai-api-keys-for-chatgpt)
+    - [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys)
     - [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
     - [1.1.3 Setup the Docker](#113-setup-the-docker)
     - [1.1.4 Login your WeChat](#114-login-your-wechat)
@@ -23,19 +23,21 @@ This project is implemented based on [this amazing project](https://github.com/f
     - [1.2.1 Configure on `Railway`](#121-configure-on-railway)
     - [1.2.2 Deploy \& Login on `Railway`](#122-deploy--login-on-railway)
 - [2. Any Fancy Advanced Settings?](#2-any-fancy-advanced-settings)
-  - [2.1 Config `ChatGPT` Models](#21-config-chatgpt-models)
-  - [2.2 Config `ChatGPT` Features](#22-config-chatgpt-features)
-  - [2.3 Config Auto Reply in Error](#23-config-auto-reply-in-error)
+  - [2.1 Config Reply in Error](#21-config-reply-in-error)
+  - [2.2 Config `OpenAI` Models](#22-config-openai-models)
+  - [2.3 Config Model Features](#23-config-model-features)
   - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
 - [3. How to Contribute to this Project?](#3-how-to-contribute-to-this-project)
 
 ## 1. How to Deploy this Bot?
 
-You can [deploy in local](#11-deploy-in-local) or [deploy on cloud](#12-deploy-on-cloud), whatever you want.
+You can deploy **in local** or **on cloud**,  whatever you want.
+
+The [deploy on cloud](#12-deploy-on-cloud) method is recommended.
 
 ### 1.1 Deploy in Local
 
-#### 1.1.1 Get your OpenAI API keys for `ChatGPT`
+#### 1.1.1 Get your OpenAI API Keys
 
 - `openaiApiKey` can be generated in the [**API Keys Page** in your OpenAI account](https://beta.openai.com/account/api-keys)
 - `openaiOrganizationID` is optional, which can be found in the [**Settings Page** in your Open AI account](https://beta.openai.com/account/org-settings)
@@ -57,7 +59,7 @@ Or you can export the environment variables listed in `.env.sample` to your syst
 ```bash
 export OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 export OPENAI_ORGANIZATION_KEY="org-XXXXXXXXXXXXXXX"
-export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
+export CHATGPT_TRIGGER_KEYWORD="机器人你好："
 ```
 
 **Please note:**
@@ -76,13 +78,13 @@ export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
 1. Setup Docker Image
 
 ```bash
-docker build -t chatgpt-on-wechat .
+docker build -t openai-on-wechat .
 ```
 
 2. Setup Docker Container
 
 ```bash
-docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
+docker run -v $(pwd)/config.yaml:/app/config.yaml openai-on-wechat
 ```
 
 ---
@@ -95,7 +97,7 @@ Once you deploy the bot successfully, just follow the `terminal` or `Logs` in Do
 2. Click "Log in" to allow desktop login (where our bot stays)
 3. Wait a few seconds and start chatting!
 
-🤖 **Enjoy your powerful chat bot!** 🤖
+🤖 **Enjoy your powerful chatbot!** 🤖
 
 ---
 
@@ -113,7 +115,7 @@ Fill in the following blanks:
 
 1. Your forked repo name (can be any name you like)
 2. Choose make it private or not (also up to you)
-3. Environment variables (for how to get OpenAI API keys, please refer to [1.1.1 Get your OpenAI API keys for `ChatGPT`](#111-get-your-openai-api-keys-for-chatgpt)
+3. Environment variables (for how to get OpenAI API keys, please refer to [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys)
 
 ![Railway Config](doc/img/Railway_config.png)
 
@@ -133,23 +135,37 @@ Click `Deply Logs` and you will see everything is setting up, wait for a QR Code
 
 ![Railway Scan QR Code](doc/img/Railway_QRCode.png)
 
-Finally, everything is good to go! You will see the logs when people sending you messagem, and whenever the ChatGPT bot is auto-triggered to reply.
+Finally, everything is good to go! You will see the logs when people sending you messagem, and whenever the chatbot is auto-triggered to reply.
 
 ![Railway Log](doc/img/Railway_log.png)
 
-🤖 **Enjoy your powerful chat bot!** 🤖
+🤖 **Enjoy your powerful chatbot!** 🤖
 
 ## 2. Any Fancy Advanced Settings?
 
-### 2.1 Config `ChatGPT` Models
+### 2.1 Config Reply in Error
 
-You can change whatever `ChatGPT` Models you like to handle task at different capability & time-consumption trade-off. (e.g. model with better capability costs more time to respond)
+When the OpenAI API encounters some errors (e.g. over-crowded traffic, no authorization, ...), the chatbot will auto-reply the pre-configured message.
+
+You can change it in `src/chatgpt.js`:
+
+```typescript
+const chatgptErrorMessage = "🤖️：AI机器人摆烂了，请稍后再试～";
+```
+
+---
+
+### 2.2 Config `OpenAI` Models
+
+You can change whatever `OpenAI` Models you like to handle task at different capability & time-consumption trade-off. (e.g. model with better capability costs more time to respond)
 
 Currently, we use the latest `text-davinci-003` model, which is:
 
 > Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following. Also supports inserting completions within text.
 
-Also, for the same model, we can configure dozens of parameter. (e.g. answer randomness, maximum word limit...)
+Also, for the same model, we can configure dozens of parameter (e.g. answer randomness, maximum word limit...). For example, for the `temperature` field:
+
+> Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
 
 You can configure all of them in `src/chatgpt.js`:
 
@@ -157,8 +173,8 @@ You can configure all of them in `src/chatgpt.js`:
 const ChatGPTModelConfig = {
   // this model field is required
   model: "text-davinci-003",
-  // add your ChatGPT model parameters below
-  temperature: 0.9,
+  // add your OpenAI model parameters below
+  temperature: 0.3,
   max_tokens: 2000,
 };
 ```
@@ -167,9 +183,9 @@ For more details, please refer to [OpenAI Models Doc](https://beta.openai.com/do
 
 ---
 
-### 2.2 Config `ChatGPT` Features
+### 2.3 Config Model Features
 
-You can change whatever `ChatGPT` features you like to handle different types of tasks. (e.g. complete text, edit text, generate image...)
+You can change whatever features you like to handle different types of tasks. (e.g. complete text, edit text, generate code...)
 
 Currently, we use `createCompletion()` to generate or manipulate text for daily usage, which:
 
@@ -190,21 +206,9 @@ For more details, please refer to [OpenAI API Doc](https://beta.openai.com/docs/
 
 ---
 
-### 2.3 Config Auto Reply in Error
-
-When `ChatGPT` encounters some errors (e.g. over-crowded traffic, no authorization, ...), the chat bot will auto-reply the pre-configured message.
-
-You can change it in `src/chatgpt.js`:
-
-```typescript
-const chatgptErrorMessage = "🤖️：麦扣的机器人摆烂了，请稍后再试～";
-```
-
----
-
 ### 2.4 Add Customized Task Handler
 
-You can add your own task handlers to expand the ability of this chat bot!
+You can add your own task handlers to expand the ability of this chatbot!
 
 Currently, add task handler in `src/main.ts`:
 
