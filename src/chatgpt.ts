@@ -59,18 +59,26 @@ export class ChatGPTBot {
     return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
   }
 
-  // configure API with model API keys and run a initial test
+  // configure API with model API keys and run an initial test
   async startGPTBot() {
-    // OpenAI Account configuration
-    this.OpenAIConfig = new Configuration({
-      organization: Config.openaiOrganizationID,
-      apiKey: Config.openaiApiKey,
-    });
-    // OpenAI API instance
-    this.OpenAI = new OpenAIApi(this.OpenAIConfig);
-    // Run an initial test to confirm API works fine
-    await this.onChatGPT("Say Hello World");
-    console.log(`🤖️ ChatGPT Bot Start Success, ready to handle message!`);
+    try {
+      // OpenAI Account configuration
+      this.OpenAIConfig = new Configuration({
+        organization: Config.openaiOrganizationID,
+        apiKey: Config.openaiApiKey,
+      });
+      // OpenAI API instance
+      this.OpenAI = new OpenAIApi(this.OpenAIConfig);
+      // Hint user the trigger keyword in private chat and group chat
+      console.log(`🤖️ Chatbot name is: ${this.botName}`);
+      console.log(`🎯 Trigger keyword in private chat is: ${this.chatgptTriggerKeyword}`);
+      console.log(`🎯 Trigger keyword in group chat is: ${this.chatGroupTriggerKeyword}`);
+      // Run an initial test to confirm API works fine
+      await this.onChatGPT("Say Hello World");
+      console.log(`✅ Chatbot starts success, ready to handle message!`);
+    } catch (e) {
+      console.error(`❌ ${e}`);
+    }
   }
 
   // get clean message by removing reply separater and group mention characters
@@ -99,7 +107,7 @@ export class ChatGPTBot {
       triggered = text.startsWith(this.chatGroupTriggerKeyword);
     }
     if (triggered) {
-      console.log(`🎯 ChatGPT Triggered: ${text}`);
+      console.log(`🎯 Chatbot triggered: ${text}`);
     }
     return triggered;
   }
@@ -135,15 +143,15 @@ export class ChatGPTBot {
       });
       // use OpenAI API to get ChatGPT reply message
       const chatgptReplyMessage = response?.data?.choices[0]?.text?.trim();
-      console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
+      console.log("🤖️ Chatbot says: ", chatgptReplyMessage);
       return chatgptReplyMessage;
     } catch (e: any) {
       const errorResponse = e?.response;
       const errorCode = errorResponse?.status;
       const errorStatus = errorResponse?.statusText;
       const errorMessage = errorResponse?.data?.error?.message;
-      console.log(`❌ Code ${errorCode}: ${errorStatus}`);
-      console.log(`❌ ${errorMessage}`);
+      console.error(`❌ Code ${errorCode}: ${errorStatus}`);
+      console.error(`❌ ${errorMessage}`);
       return chatgptErrorMessage;
     }
   }
