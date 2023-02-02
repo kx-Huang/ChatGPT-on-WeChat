@@ -55,8 +55,10 @@ export class ChatGPTBot {
   }
 
   // get trigger keyword in group chat: (@Name <keyword>)
+  // in group chat, replace the special character after "@username" to space
+  // to prevent cross-platfrom mention issue
   get chatGroupTriggerKeyword(): string {
-    return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
+    return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
   }
 
   // configure API with model API keys and run an initial test
@@ -88,11 +90,11 @@ export class ChatGPTBot {
     if (item.length > 1) {
       text = item[item.length - 1];
     }
-    text = text.replace(
-      isPrivateChat ? this.chatgptTriggerKeyword : this.chatGroupTriggerKeyword,
-      ""
+    return text.slice(
+      isPrivateChat
+        ? this.chatgptTriggerKeyword.length
+        : this.chatGroupTriggerKeyword.length
     );
-    return text;
   }
 
   // check whether ChatGPT bot can be triggered
@@ -104,7 +106,17 @@ export class ChatGPTBot {
         ? text.startsWith(chatgptTriggerKeyword)
         : true;
     } else {
-      triggered = text.startsWith(this.chatGroupTriggerKeyword);
+      // due to un-unified @ lagging character, ignore it and just match:
+      //    1. the "@username" (mention)
+      //    2. trigger keyword
+      // start with @username
+      const textMention = `@${this.botName}`;
+      const startsWithMention = text.startsWith(textMention);
+      const textWithoutMention = text.slice(textMention.length + 1);
+      const followByTriggerKeyword = textWithoutMention.startsWith(
+        this.chatgptTriggerKeyword
+      );
+      triggered = startsWithMention && followByTriggerKeyword;
     }
     if (triggered) {
       console.log(`🎯 Chatbot triggered: ${text}`);
