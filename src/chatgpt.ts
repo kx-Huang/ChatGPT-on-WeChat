@@ -131,16 +131,12 @@ export class ChatGPTBot {
     text: string
   ): boolean {
     return (
-      // self-chatting can be used for testing
-      talker.self() ||
-      messageType > MessageType.GroupNote ||
+      messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder
       text.includes("收到一条视频/语音聊天消息，请在手机上查看") ||
       // red pocket reminder
-      text.includes("收到红包，请在手机上查看") ||
-      // location information
-      text.includes("/cgi-bin/mmwebwx-bin/webwxgetpubliclinkimg")
+      text.includes("收到红包，请在手机上查看")
     );
   }
 
@@ -197,9 +193,9 @@ export class ChatGPTBot {
   async onGroupMessage(room: RoomInterface, text: string) {
     // get reply from ChatGPT
     const chatgptReplyMessage = await this.onChatGPT(text);
-    // the reply consist of: original text and bot reply
-    const result = `${text}\n ---------- \n ${chatgptReplyMessage}`;
-    await this.reply(room, result);
+    // the whole reply consist of: original text and bot reply
+    const wholeReplyMessage = `${text}\n----------\n${chatgptReplyMessage}`;
+    await this.reply(room, wholeReplyMessage);
   }
 
   // receive a message (main entry)
