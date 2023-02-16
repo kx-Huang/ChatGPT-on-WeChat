@@ -12,7 +12,7 @@ const ChatGPTModelConfig = {
   // this model field is required
   model: "text-davinci-003",
   // add your ChatGPT model parameters below
-  temperature: 0.3,
+  temperature: 0.7,
   max_tokens: 2000,
 };
 
@@ -73,8 +73,12 @@ export class ChatGPTBot {
       this.OpenAI = new OpenAIApi(this.OpenAIConfig);
       // Hint user the trigger keyword in private chat and group chat
       console.log(`🤖️ Chatbot name is: ${this.botName}`);
-      console.log(`🎯 Trigger keyword in private chat is: ${this.chatgptTriggerKeyword}`);
-      console.log(`🎯 Trigger keyword in group chat is: ${this.chatGroupTriggerKeyword}`);
+      console.log(
+        `🎯 Trigger keyword in private chat is: ${this.chatgptTriggerKeyword}`
+      );
+      console.log(
+        `🎯 Trigger keyword in group chat is: ${this.chatGroupTriggerKeyword}`
+      );
       // Run an initial test to confirm API works fine
       await this.onChatGPT("Say Hello World");
       console.log(`✅ Chatbot starts success, ready to handle message!`);
@@ -132,7 +136,7 @@ export class ChatGPTBot {
   ): boolean {
     return (
       // self-chatting can be used for testing
-      talker.self() ||
+      // talker.self() ||
       messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder
@@ -225,6 +229,20 @@ export class ChatGPTBot {
       return await this.onPrivateMessage(talker, text);
     } else {
       return await this.onGroupMessage(room, text);
+    }
+  }
+
+  // handle message for customized task handlers
+  async onCustimzedTask(message: Message) {
+    // e.g. if a message starts with "麦扣", the bot sends "🤖️：call我做咩啊大佬!"
+    const myKeyword = "麦扣";
+    if (message.text().includes(myKeyword)) {
+      const myTaskContent = `回复所有含有"${myKeyword}"的消息`
+      const myReply = "🤖️：call我做咩啊大佬";
+      await message.say(myReply);
+      console.log(`🎯 Customized task triggered: ${myTaskContent}`);
+      console.log(`🤖️ Chatbot says: ${myReply}`);
+      return;
     }
   }
 }
