@@ -12,7 +12,7 @@ const ChatGPTModelConfig = {
   // this model field is required
   model: "text-davinci-003",
   // add your ChatGPT model parameters below
-  temperature: 0.7,
+  temperature: 0.3,
   max_tokens: 2000,
 };
 
@@ -136,7 +136,7 @@ export class ChatGPTBot {
   ): boolean {
     return (
       // self-chatting can be used for testing
-      // talker.self() ||
+      talker.self() ||
       messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder
