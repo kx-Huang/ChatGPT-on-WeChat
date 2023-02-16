@@ -210,7 +210,7 @@ For more details, please refer to [OpenAI API Doc](https://beta.openai.com/docs/
 
 You can add your own task handlers to expand the ability of this chatbot!
 
-Currently, add task handler in `src/main.ts`:
+In `src/chatgpt.ts` `ChatGPTBot.onCustimzedTask()`, write your own task handler:
 
 ```typescript
 // e.g. if a message starts with "Hello", the bot sends "World!"
@@ -219,8 +219,6 @@ if (message.text().startsWith("Hello")) {
   return;
 }
 ```
-
-Of course, stuffing all handlers in `main` function is really a **BAD** habit in coding. As a result, we will fix this in future updates to do logic separation.
 
 ## 3. How to Contribute to this Project?
 
