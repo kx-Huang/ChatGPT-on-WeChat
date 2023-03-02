@@ -159,9 +159,9 @@ const chatgptErrorMessage = "🤖️：AI机器人摆烂了，请稍后再试～
 
 You can change whatever `OpenAI` Models you like to handle task at different capability & time-consumption trade-off. (e.g. model with better capability costs more time to respond)
 
-Currently, we use the latest `text-davinci-003` model, which is:
+Currently, we use the latest `gpt-3.5-turbo` model, which is:
 
-> Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following. Also supports inserting completions within text.
+> Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003. Will be updated with our latest model iteration.
 
 Also, for the same model, we can configure dozens of parameter (e.g. answer randomness, maximum word limit...). For example, for the `temperature` field:
 
@@ -172,7 +172,7 @@ You can configure all of them in `src/chatgpt.js`:
 ```typescript
 const ChatGPTModelConfig = {
   // this model field is required
-  model: "text-davinci-003",
+  model: "gpt-3.5-turbo",
   // add your OpenAI model parameters below
   temperature: 0.3,
   max_tokens: 2000,
