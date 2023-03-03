@@ -2,13 +2,15 @@
 
 🤖️ Turn your WeChat into ChatGPT [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️
 
-![Your ChatGPT in Group Chat!](doc/img/demo.png)
+<p align="center">
+  <img src="doc/img/demo.png" alt="Group chat demo for @kx-Huang/ChatGPT-on-WeChat" />
+</p>
 
 ## Acknowledgement & Features <!-- omit in toc -->
 
-This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) that I contibuted before, with [`Wechaty SDK`](https://github.com/wechaty/wechaty) and `OpenAI API Key`, we achieve:
+This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) that I contibuted before, with [`Wechaty SDK`](https://github.com/wechaty/wechaty) and `OpenAI API`, we achieve:
 
-- fast and robust connection to dozens of `AI model` with different features
+- fast and robust connection to a set of AI models with different features, typically `gpt-3.5-turbo` which powers `ChatGPT`
 - stable and persistent deployment on cloud servers `Railway`
 
 ## 0. Table of Content <!-- omit in toc -->
@@ -28,6 +30,7 @@ This project is implemented based on [this amazing project](https://github.com/f
   - [2.3 Config Model Features](#23-config-model-features)
   - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
 - [3. How to Contribute to this Project?](#3-how-to-contribute-to-this-project)
+- [Thanks for your support!](#thanks-for-your-support)
 
 ## 1. How to Deploy this Bot?
 
@@ -66,7 +69,7 @@ export CHATGPT_TRIGGER_KEYWORD="机器人你好："
 
 - `chatgptTriggerKeyword` is the keyword which can trigger auto-reply:
   - In private chat, the message **starts with** it will trigger auto-reply
-  - In group chat, the message **starts with** `@Name <keyword>` will trigger auto-reply (Here `@Name ` means "@ the bot" in the group chat)
+  - In group chat, the message **starts with** `@Name <keyword>` will trigger auto-reply
 - `chatgptTriggerKeyword` can be **empty string**, which means:
   - In private chat, **every messages** will trigger auto-reply
   - In group chat, only **"@ the bot"** will trigger auto-reply
@@ -221,3 +224,14 @@ if (message.text().startsWith("Hello")) {
 ## 3. How to Contribute to this Project?
 
 You can raise some issues, fork this repo, commit your code, submit pull request, and after code review, we can merge your patch. I'm really looking forward to develop more interesting features!
+
+## Thanks for your support!
+
+<p align="center">
+  <a href="https://github.com/kx-Huang/ChatGPT-on-WeChat/stargazers">
+    <img src="https://reporoster.com/stars/dark/kx-Huang/ChatGPT-on-WeChat" alt="Stargazers repo roster for @kx-Huang/ChatGPT-on-WeChat" />
+  </a>
+  <a href="https://github.com/kx-Huang/ChatGPT-on-WeChat/stargazers">
+    <img src="https://api.star-history.com/svg?repos=kx-Huang/ChatGPT-on-WeChat&type=Date" alt="Star history chart for @kx-Huang/ChatGPT-on-WeChat"/>
+  </a>
+</p>
