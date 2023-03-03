@@ -4,16 +4,16 @@ import { ContactInterface, RoomInterface } from "wechaty/impls";
 import { Configuration, OpenAIApi } from "openai";
 
 // ChatGPT error response configuration
-const chatgptErrorMessage = "🤖️：AI机器人摆烂了，请稍后再试～";
+const chatgptErrorMessage = "🤖️：ChatGPT摆烂了，请稍后再试～";
 
 // ChatGPT model configuration
 // please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
 const ChatGPTModelConfig = {
   // this model field is required
-  model: "text-davinci-003",
+  model: "gpt-3.5-turbo",
   // add your ChatGPT model parameters below
-  temperature: 0.3,
-  max_tokens: 2000,
+  temperature: 0.8,
+  // max_tokens: 2000,
 };
 
 // message size for a single reply by the bot
@@ -46,8 +46,18 @@ export class ChatGPTBot {
   OpenAI: any; // OpenAI API instance
 
   // Chatgpt fine-tune for being a chatbot (guided by OpenAI official document)
-  applyContext(text: string): string {
-    return `You are an artificial intelligence bot from a company called "OpenAI". Your primary tasks are chatting with users and answering their questions.\nIf the user says: ${text}.\nYou will say: `;
+  createMessages(text: string): object {
+    return [
+      {
+        role: "system",
+        content:
+          "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.",
+      },
+      {
+        role: "user",
+        content: text,
+      },
+    ];
   }
 
   setBotName(botName: string) {
@@ -72,7 +82,7 @@ export class ChatGPTBot {
       // OpenAI API instance
       this.OpenAI = new OpenAIApi(this.OpenAIConfig);
       // Hint user the trigger keyword in private chat and group chat
-      console.log(`🤖️ Chatbot name is: ${this.botName}`);
+      console.log(`🤖️ ChatGPT name is: ${this.botName}`);
       console.log(
         `🎯 Trigger keyword in private chat is: ${this.chatgptTriggerKeyword}`
       );
@@ -81,7 +91,7 @@ export class ChatGPTBot {
       );
       // Run an initial test to confirm API works fine
       await this.onChatGPT("Say Hello World");
-      console.log(`✅ Chatbot starts success, ready to handle message!`);
+      console.log(`✅ ChatGPT starts success, ready to handle message!`);
     } catch (e) {
       console.error(`❌ ${e}`);
     }
@@ -150,23 +160,25 @@ export class ChatGPTBot {
 
   // send question to ChatGPT with OpenAI API and get answer
   async onChatGPT(text: string): Promise<string> {
-    const inputMessage = this.applyContext(text);
+    const inputMessages = this.createMessages(text);
     try {
       // config OpenAI API request body
-      const response = await this.OpenAI.createCompletion({
+      const response = await this.OpenAI.createChatCompletion({
         ...ChatGPTModelConfig,
-        prompt: inputMessage,
+        messages: inputMessages,
       });
       // use OpenAI API to get ChatGPT reply message
-      const chatgptReplyMessage = response?.data?.choices[0]?.text?.trim();
-      console.log("🤖️ Chatbot says: ", chatgptReplyMessage);
+      const chatgptReplyMessage =
+        response?.data?.choices[0]?.message?.content?.trim();
+      console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
       return chatgptReplyMessage;
     } catch (e: any) {
       const errorResponse = e?.response;
       const errorCode = errorResponse?.status;
       const errorStatus = errorResponse?.statusText;
       const errorMessage = errorResponse?.data?.error?.message;
-      console.error(`❌ Code ${errorCode}: ${errorStatus}`);
+      const errorLog = `Code ${errorCode}: ${errorStatus}`;
+      console.error(`❌ ${errorLog}`);
       console.error(`❌ ${errorMessage}`);
       return chatgptErrorMessage;
     }
@@ -237,11 +249,11 @@ export class ChatGPTBot {
     // e.g. if a message starts with "麦扣", the bot sends "🤖️：call我做咩啊大佬!"
     const myKeyword = "麦扣";
     if (message.text().includes(myKeyword)) {
-      const myTaskContent = `回复所有含有"${myKeyword}"的消息`
+      const myTaskContent = `回复所有含有"${myKeyword}"的消息`;
       const myReply = "🤖️：call我做咩啊大佬";
       await message.say(myReply);
       console.log(`🎯 Customized task triggered: ${myTaskContent}`);
-      console.log(`🤖️ Chatbot says: ${myReply}`);
+      console.log(`🤖️ ChatGPT says: ${myReply}`);
       return;
     }
   }
