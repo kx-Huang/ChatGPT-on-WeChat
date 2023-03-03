@@ -146,7 +146,7 @@ export class ChatGPTBot {
   ): boolean {
     return (
       // self-chatting can be used for testing
-      // talker.self() ||
+      talker.self() ||
       messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder
