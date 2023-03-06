@@ -27,6 +27,10 @@ export class ChatGPTBot {
   // chatbot name (WeChat account name)
   botName: string = "";
 
+  // self-chat may cause some issue for some WeChat Account
+  // please set to true if self-chat cause some errors
+  disableSelfChat: boolean = false;
+
   // chatbot trigger keyword
   chatgptTriggerKeyword: string = Config.chatgptTriggerKeyword;
 
@@ -146,8 +150,7 @@ export class ChatGPTBot {
     text: string
   ): boolean {
     return (
-      // self-chatting can be used for testing
-      // talker.self() ||
+      (this.disableSelfChat && talker.self()) ||
       messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder

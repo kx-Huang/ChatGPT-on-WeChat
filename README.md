@@ -29,7 +29,10 @@ This project is implemented based on [this amazing project](https://github.com/f
   - [2.2 Config `OpenAI` Models](#22-config-openai-models)
   - [2.3 Config Model Features](#23-config-model-features)
   - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
-- [3. How to Contribute to this Project?](#3-how-to-contribute-to-this-project)
+- [3. Common Errors and Troubleshooting](#3-common-errors-and-troubleshooting)
+  - [3.1 Assertion Error during Login or Self-chat 🤯](#31-assertion-error-during-login-or-self-chat-)
+  - [3.2 I can't trigger auto reply 🤔](#32-i-cant-trigger-auto-reply-)
+- [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
 - [Thanks for your support!](#thanks-for-your-support)
 
 ## 1. How to Deploy this Bot?
@@ -173,10 +176,10 @@ Also, for the same model, we can configure dozens of parameter (e.g. answer rand
 You can configure all of them in `src/chatgpt.js`:
 
 ```typescript
-const ChatGPTModelConfig = {
+chatgptModelConfig: object = {
   // this model field is required
   model: "gpt-3.5-turbo",
-  // add your OpenAI model parameters below
+  // add your ChatGPT model parameters below
   temperature: 0.8,
   // max_tokens: 2000,
 };
@@ -197,8 +200,8 @@ Currently, we use `createChatCompletion()` powered by `gpt-3.5-turbo` model, whi
 You can configure in `src/chatgpt.js`:
 
 ```typescript
-const response = await this.OpenAI.createChatCompletion({
-  ...ChatGPTModelConfig,
+const response = await this.openaiApiInstance.createChatCompletion({
+  ...this.chatgptModelConfig,
   messages: inputMessages,
 });
 ```
@@ -221,7 +224,37 @@ if (message.text().startsWith("Hello")) {
 }
 ```
 
-## 3. How to Contribute to this Project?
+## 3. Common Errors and Troubleshooting
+
+### 3.1 Assertion Error during Login or Self-chat 🤯
+
+- Error Log:
+
+  ```log
+  uncaughtException AssertionError [ERR_ASSERTION]: 1 == 0
+      at Object.equal (/app/node_modules/wechat4u/src/util/global.js:53:14)
+      at /app/node_modules/wechat4u/src/core.js:195:16
+      at processTicksAndRejections (node:internal/process/task_queues:96:5) {
+    code: 2,
+    details: 'AssertionError [ERR_ASSERTION]: 1 == 0\n' +
+      '    at Object.equal (/app/node_modules/wechat4u/src/util/global.js:53:14)\n' +
+      '    at /app/node_modules/wechat4u/src/core.js:195:16\n' +
+      '    at processTicksAndRejections (node:internal/process/task_queues:96:5)'
+  }
+  ```
+
+- Solution:
+  - If see this error during login, please check [issue #8](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/8)
+  - If see this error during self-chat, please check [issue #38](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/38)
+
+### 3.2 I can't trigger auto reply 🤔
+- Solution:
+    - Before deployment, read the trigger conditions in [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
+    - After deployment, check the console logs for following lines:
+      - 🎯 Trigger keyword in private chat is: `<keyword>`
+      - 🎯 Trigger keyword in group chat is: `@Name <keyword>`
+
+## 4. How to Contribute to this Project?
 
 You can raise some issues, fork this repo, commit your code, submit pull request, and after code review, we can merge your patch. I'm really looking forward to develop more interesting features!
 
