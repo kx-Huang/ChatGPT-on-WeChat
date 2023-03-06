@@ -3,22 +3,6 @@ import { Message } from "wechaty";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
 import { Configuration, OpenAIApi } from "openai";
 
-// ChatGPT error response configuration
-const chatgptErrorMessage = "🤖️：ChatGPT摆烂了，请稍后再试～";
-
-// ChatGPT model configuration
-// please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
-const ChatGPTModelConfig = {
-  // this model field is required
-  model: "gpt-3.5-turbo",
-  // add your ChatGPT model parameters below
-  temperature: 0.8,
-  // max_tokens: 2000,
-};
-
-// message size for a single reply by the bot
-const SINGLE_MESSAGE_MAX_SIZE = 500;
-
 enum MessageType {
   Unknown = 0,
   Attachment = 1, // Attach(6),
@@ -40,26 +24,37 @@ enum MessageType {
 }
 
 export class ChatGPTBot {
+  // chatbot name (WeChat account name)
   botName: string = "";
-  chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
-  OpenAIConfig: any; // OpenAI API key
-  OpenAI: any; // OpenAI API instance
 
-  // Chatgpt fine-tune for being a chatbot (guided by OpenAI official document)
-  createMessages(text: string): object {
-    return [
-      {
-        role: "system",
-        content:
-          "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.",
-      },
-      {
-        role: "user",
-        content: text,
-      },
-    ];
-  }
+  // chatbot trigger keyword
+  chatgptTriggerKeyword: string = Config.chatgptTriggerKeyword;
 
+  // ChatGPT error response
+  chatgptErrorMessage: string = "🤖️：ChatGPT摆烂了，请稍后再试～";
+
+  // ChatGPT model configuration
+  // please refer to the OpenAI API doc: https://beta.openai.com/docs/api-reference/introduction
+  chatgptModelConfig: object = {
+    // this model field is required
+    model: "gpt-3.5-turbo",
+    // add your ChatGPT model parameters below
+    temperature: 0.8,
+    // max_tokens: 2000,
+  };
+
+  // ChatGPT system content configuration (guided by OpenAI official document)
+  currentDate: string = new Date().toISOString().split("T")[0];
+  chatgptSystemContent: string = `You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nKnowledge cutoff: 2021-09-01\nCurrent date: ${this.currentDate}`;
+
+  // message size for a single reply by the bot
+  SINGLE_MESSAGE_MAX_SIZE: number = 500;
+
+  // OpenAI API
+  private openaiAccountConfig: any; // OpenAI API key (required) and organization key (optional)
+  private openaiApiInstance: any; // OpenAI API instance
+
+  // set bot name during login stage
   setBotName(botName: string) {
     this.botName = botName;
   }
@@ -67,20 +62,20 @@ export class ChatGPTBot {
   // get trigger keyword in group chat: (@Name <keyword>)
   // in group chat, replace the special character after "@username" to space
   // to prevent cross-platfrom mention issue
-  get chatGroupTriggerKeyword(): string {
+  private get chatGroupTriggerKeyword(): string {
     return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
   }
 
   // configure API with model API keys and run an initial test
   async startGPTBot() {
     try {
-      // OpenAI Account configuration
-      this.OpenAIConfig = new Configuration({
+      // OpenAI account configuration
+      this.openaiAccountConfig = new Configuration({
         organization: Config.openaiOrganizationID,
         apiKey: Config.openaiApiKey,
       });
       // OpenAI API instance
-      this.OpenAI = new OpenAIApi(this.OpenAIConfig);
+      this.openaiApiInstance = new OpenAIApi(this.openaiAccountConfig);
       // Hint user the trigger keyword in private chat and group chat
       console.log(`🤖️ ChatGPT name is: ${this.botName}`);
       console.log(
@@ -98,7 +93,10 @@ export class ChatGPTBot {
   }
 
   // get clean message by removing reply separater and group mention characters
-  cleanMessage(rawText: string, isPrivateChat: boolean = false): string {
+  private cleanMessage(
+    rawText: string,
+    isPrivateChat: boolean = false
+  ): string {
     let text = rawText;
     const item = rawText.split("- - - - - - - - - - - - - - -");
     if (item.length > 1) {
@@ -112,7 +110,10 @@ export class ChatGPTBot {
   }
 
   // check whether ChatGPT bot can be triggered
-  triggerGPTMessage(text: string, isPrivateChat: boolean = false): boolean {
+  private triggerGPTMessage(
+    text: string,
+    isPrivateChat: boolean = false
+  ): boolean {
     const chatgptTriggerKeyword = this.chatgptTriggerKeyword;
     let triggered = false;
     if (isPrivateChat) {
@@ -133,20 +134,20 @@ export class ChatGPTBot {
       triggered = startsWithMention && followByTriggerKeyword;
     }
     if (triggered) {
-      console.log(`🎯 Chatbot triggered: ${text}`);
+      console.log(`🎯 ChatGPT triggered: ${text}`);
     }
     return triggered;
   }
 
   // filter out the message that does not need to be processed
-  isNonsense(
+  private isNonsense(
     talker: ContactInterface,
     messageType: MessageType,
     text: string
   ): boolean {
     return (
       // self-chatting can be used for testing
-      talker.self() ||
+      // talker.self() ||
       messageType != MessageType.Text ||
       talker.name() == "微信团队" ||
       // video or voice reminder
@@ -158,42 +159,63 @@ export class ChatGPTBot {
     );
   }
 
+  // create messages for ChatGPT API request
+  // TODO: store history chats for supporting context chat
+  private createMessages(text: string): Array<Object> {
+    const messages = [
+      {
+        role: "system",
+        content: this.chatgptSystemContent,
+      },
+      {
+        role: "user",
+        content: text,
+      },
+    ];
+    return messages;
+  }
+
   // send question to ChatGPT with OpenAI API and get answer
-  async onChatGPT(text: string): Promise<string> {
+  private async onChatGPT(text: string): Promise<string> {
     const inputMessages = this.createMessages(text);
     try {
       // config OpenAI API request body
-      const response = await this.OpenAI.createChatCompletion({
-        ...ChatGPTModelConfig,
+      const response = await this.openaiApiInstance.createChatCompletion({
+        ...this.chatgptModelConfig,
         messages: inputMessages,
       });
       // use OpenAI API to get ChatGPT reply message
       const chatgptReplyMessage =
         response?.data?.choices[0]?.message?.content?.trim();
-      console.log("🤖️ ChatGPT says: ", chatgptReplyMessage);
+      console.log(`🤖️ ChatGPT says: ${chatgptReplyMessage}`);
       return chatgptReplyMessage;
     } catch (e: any) {
+      console.error(`❌ ${e}`);
       const errorResponse = e?.response;
       const errorCode = errorResponse?.status;
       const errorStatus = errorResponse?.statusText;
       const errorMessage = errorResponse?.data?.error?.message;
-      const errorLog = `Code ${errorCode}: ${errorStatus}`;
-      console.error(`❌ ${errorLog}`);
-      console.error(`❌ ${errorMessage}`);
-      return chatgptErrorMessage;
+      if (errorCode && errorStatus) {
+        const errorLog = `Code ${errorCode}: ${errorStatus}`;
+        console.error(`❌ ${errorLog}`);
+      }
+      if (errorMessage) {
+        console.error(`❌ ${errorMessage}`);
+      }
+      return this.chatgptErrorMessage;
     }
   }
 
   // reply with the segmented messages from a single-long message
-  async reply(
+  private async reply(
     talker: RoomInterface | ContactInterface,
     mesasge: string
   ): Promise<void> {
     const messages: Array<string> = [];
     let message = mesasge;
-    while (message.length > SINGLE_MESSAGE_MAX_SIZE) {
-      messages.push(message.slice(0, SINGLE_MESSAGE_MAX_SIZE));
-      message = message.slice(SINGLE_MESSAGE_MAX_SIZE);
+    while (message.length > this.SINGLE_MESSAGE_MAX_SIZE) {
+      messages.push(message.slice(0, this.SINGLE_MESSAGE_MAX_SIZE));
+      message = message.slice(this.SINGLE_MESSAGE_MAX_SIZE);
     }
     messages.push(message);
     for (const msg of messages) {
@@ -202,7 +224,7 @@ export class ChatGPTBot {
   }
 
   // reply to private message
-  async onPrivateMessage(talker: ContactInterface, text: string) {
+  private async onPrivateMessage(talker: ContactInterface, text: string) {
     // get reply from ChatGPT
     const chatgptReplyMessage = await this.onChatGPT(text);
     // send the ChatGPT reply to chat
@@ -210,7 +232,7 @@ export class ChatGPTBot {
   }
 
   // reply to group message
-  async onGroupMessage(room: RoomInterface, text: string) {
+  private async onGroupMessage(room: RoomInterface, text: string) {
     // get reply from ChatGPT
     const chatgptReplyMessage = await this.onChatGPT(text);
     // the whole reply consist of: original text and bot reply

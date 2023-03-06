@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "openai": "^3.2.1",
+    "@dqbd/tiktoken": "^0.4.0",
     "dotenv": "^16.0.3",
     "qrcode": "^1.5.1",
     "uuid": "^9.0.0",
