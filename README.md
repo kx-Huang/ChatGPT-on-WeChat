@@ -103,6 +103,21 @@ Once you deploy the bot successfully, just follow the `terminal` or `Logs` in Do
 2. Click "Log in" to allow desktop login (where our bot stays)
 3. Wait a few seconds and start chatting!
 
+---
+
+#### 1.1.5 Use with docker compose
+
+```sh
+# Copy the configuration file according to the template
+cp config.yaml.example config.yaml
+# Edit the configuration file
+vim config.yaml
+# Start the container
+docker-compose up -d
+# View the QR code to log in to wechat
+docker-compose logs -f
+```
+
 🤖 **Enjoy your powerful chatbot!** 🤖
 
 ---
