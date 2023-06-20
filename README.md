@@ -10,8 +10,8 @@
 
 This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) that I contibuted before, with [`Wechaty SDK`](https://github.com/wechaty/wechaty) and `OpenAI API`, we achieve:
 
-- fast and robust connection to a set of AI models with different features, typically `gpt-3.5-turbo` which powers `ChatGPT`
-- stable and persistent deployment on cloud servers `Railway`
+- fast and robust connection to a set of AI models with different features, typically `gpt-4` and `gpt-3.5-turbo` which powers `ChatGPT`
+- stable, persistent and rapid deployment on cloud servers `Railway`
 
 ## 0. Table of Content <!-- omit in toc -->
 
@@ -163,15 +163,17 @@ const chatgptErrorMessage = "🤖️：ChatGPT摆烂了，请稍后再试～";
 
 ### 2.2 Config `OpenAI` Models
 
-You can change whatever `OpenAI` Models you like to handle task at different capability & time-consumption trade-off. (e.g. model with better capability costs more time to respond)
+You can change whatever `OpenAI` Models you like to handle task at different capability, time-consumption and expense trade-off. (e.g. model with better capability costs more time to respond)
 
-Currently, we use the latest `gpt-3.5-turbo` model. According to OpenAI doc,
+Since the latest `gpt-4` model is currently in a limited beta and only accessible to those who have been granted access, currently we use the `gpt-3.5-turbo` model as default. Of course, if you have the access to `gpt-4` API, you can just change the model to `gpt-4` without any other modification.
 
-> ChatGPT is powered by `gpt-3.5-turbo`, OpenAI’s most advanced language model.
+According to OpenAI doc,
+
+> GPT-3.5 models can understand and generate natural language or code. Our most capable and cost effective model in the GPT-3.5 family is `gpt-3.5-turbo` which has been optimized for chat but works well for traditional completions tasks as well.
 
 Also, for the same model, we can configure dozens of parameter (e.g. answer randomness, maximum word limit...). For example, for the `temperature` field:
 
-> Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+> Higher values like **0.8** will make the output more random, while lower values like **0.2** will make it more focused and deterministic.
 
 You can configure all of them in `src/chatgpt.js`:
 
@@ -256,7 +258,20 @@ if (message.text().startsWith("Hello")) {
 
 ## 4. How to Contribute to this Project?
 
-You can raise some issues, fork this repo, commit your code, submit pull request, and after code review, we can merge your patch. I'm really looking forward to develop more interesting features!
+You are more than welcome to raise some issues, fork this repo, commit your code and submit pull request. And after code review, we can merge your contribution. I'm really looking forward to develop more interesting features!
+
+Also, there're something in the to-do list for future enhancement:
+
+1. Chat with context:
+  - Keep track of every on-going conversation for each private chat or group chat
+  - Dynamic drop or summarize the history conversation sent throught API in case the token gets oversized
+  - Set time-out for a conversation when users stop chatting for a while
+2. More AI capability:
+  - Integrate OpenAI `DALL·E` model for AI image creation. Triggered by customized keyword (e.g. Hi bot, draw...)
+  - Integrate OpenAi `Whisper` model for speech recognition. Triggered by voice messages and do transcription or translation
+3. More flexible depolyment:
+  - Make deployment templates on other cloud platforms
+  - Optimize depolyment process to be more robust and compatible on different OS
 
 ## Thanks for your support!
 
