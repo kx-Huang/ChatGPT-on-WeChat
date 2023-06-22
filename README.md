@@ -84,13 +84,13 @@ export CHATGPT_TRIGGER_KEYWORD="机器人你好："
 1. Setup Docker Image
 
 ```bash
-docker build -t openai-on-wechat .
+docker build -t chatgpt-on-wechat .
 ```
 
 2. Setup Docker Container
 
 ```bash
-docker run -v $(pwd)/config.yaml:/app/config.yaml openai-on-wechat
+docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 ```
 
 ---
