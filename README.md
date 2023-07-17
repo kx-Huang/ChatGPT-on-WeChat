@@ -1,7 +1,7 @@
-# ChatGPT on WeChat ![GitHub License](https://img.shields.io/github/license/kx-huang/chatgpt-on-wechat?label=License) [![wakatime](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394.svg)](https://wakatime.com/badge/user/7d2c2fc8-bd1d-4e1e-bb2b-b49c6120ed53/project/205c561e-69ba-4478-b07f-f5bc7a0ed394) ![Railway Deploy](https://img.shields.io/github/checks-status/kx-huang/chatgpt-on-wechat/master?logo=railway&style=flat&label=Deploy) ![Railway Users](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frailway.app%2F_next%2Fdata%2FkPzI0eK1vCVZ8t4Eq5paO%2Ftemplates.json&query=%24.pageProps.templates%5B%3F(%40.id%3D%3D%2243d1518f-3609-45db-aa3c-42db42c7573e%22)%5D.projects&logo=railway&label=Users&color=orange) ![GitHub Repo stars](https://img.shields.io/github/stars/kx-huang/chatgpt-on-wechat?style=social)
+# ChatGPT on WeChat ![GitHub License](https://img.shields.io/github/license/kx-huang/chatgpt-on-wechat?label=License) [![wakatime](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat.svg)](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat) ![Railway Deploy](https://img.shields.io/github/checks-status/kx-huang/chatgpt-on-wechat/master?logo=railway&style=flat&label=Deploy) ![Railway Users](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frailway.app%2F_next%2Fdata%2FkPzI0eK1vCVZ8t4Eq5paO%2Ftemplates.json&query=%24.pageProps.templates%5B%3F(%40.id%3D%3D%2243d1518f-3609-45db-aa3c-42db42c7573e%22)%5D.projects&logo=railway&label=Users&color=orange)
 <!-- omit in toc -->
 
-🤖️ Turn your WeChat into ChatGPT [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️
+🤖️ Turn your WeChat into ChatGPT [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️ 
 
 <p align="center">
   <img src="doc/img/demo.png" alt="Group chat demo for @kx-Huang/ChatGPT-on-WeChat" />
