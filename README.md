@@ -1,4 +1,4 @@
-# ChatGPT on WeChat ![GitHub License](https://img.shields.io/github/license/kx-huang/chatgpt-on-wechat?label=License) [![wakatime](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat.svg)](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat) ![Railway Deploy](https://img.shields.io/github/checks-status/kx-huang/chatgpt-on-wechat/master?logo=railway&style=flat&label=Deploy) ![Railway Users](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frailway.app%2F_next%2Fdata%2FzIc_Aq6F4nMDihEm4kEkk%2Ftemplate%2FzKIfYk.json%3Fcode%3DzKIfYk&query=%24.pageProps.template.projects&logo=railway&label=Users&color=orange)
+# ChatGPT on WeChat ![GitHub License](https://img.shields.io/github/license/kx-huang/chatgpt-on-wechat?label=License&color=orange) [![wakatime](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat.svg)](https://wakatime.com/badge/github/kx-Huang/ChatGPT-on-WeChat) ![Railway Deploy](https://img.shields.io/github/checks-status/kx-huang/chatgpt-on-wechat/master?logo=railway&style=flat&label=Deploy) ![GitHub Repo stars](https://img.shields.io/github/stars/kx-huang/chatgpt-on-wechat?style=social)
 
 <!-- omit in toc -->
 
