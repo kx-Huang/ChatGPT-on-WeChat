@@ -27,6 +27,9 @@ export class ChatGPTBot {
   // chatbot name (WeChat account name)
   botName: string = "";
 
+  // chatbot start time (prevent duplicate response on restart)
+  startTime: Date = new Date();
+
   // self-chat may cause some issue for some WeChat Account
   // please set to true if self-chat cause some errors
   disableSelfChat: boolean = false;
