@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  openai-on-wechat:
+    image: openai-on-wechat
+    build: .
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./config.yaml:/app/config.yaml
