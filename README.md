@@ -97,7 +97,7 @@ docker build -t chatgpt-on-wechat .
 docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 ```
 
-You can also build with Docker Compose
+You can also build with Docker Compose:
 
 1. Start the container
 
@@ -301,6 +301,7 @@ Great thanks to:
 
 - [@leoncsyang](https://github.com/leoncsyang) for fixing [Issue #81](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/81)
 - [@hdfk7](https://github.com/hdfk7) for fixing [Issue #67](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/67)
+- [@jichangfeng](https://github.com/jichangfeng) for merging [PR #61](https://github.com/kx-Huang/ChatGPT-on-WeChat/pull/61)
 
 ## Thanks for your support by starring this project!
 
