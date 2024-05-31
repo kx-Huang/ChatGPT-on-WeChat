@@ -2,7 +2,7 @@
 
 <!-- omit in toc -->
 
-🤖️ Turn your WeChat into ChatGPT [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️ 
+🤖️ Turn your WeChat into ChatGPT [**within only 2 steps!**](#12-deploy-on-cloud) 🤖️
 
 <p align="center">
   <img src="doc/img/demo.png" alt="Group chat demo for @kx-Huang/ChatGPT-on-WeChat" />
@@ -12,30 +12,31 @@
 
 This project is implemented based on [this amazing project](https://github.com/fuergaosi233/wechat-chatgpt) that I contibuted before, with [`Wechaty SDK`](https://github.com/wechaty/wechaty) and `OpenAI API`, we achieve:
 
-- fast and robust connection to a set of AI models with different features, typically `gpt-4` and `gpt-3.5-turbo` which powers `ChatGPT`
+- fast and robust connection to a set of AI models with different features, typically `gpt-4o` and `gpt-3.5-turbo` which powers `ChatGPT`
 - stable, persistent and rapid deployment on cloud servers `Railway`
 
 ## 0. Table of Content <!-- omit in toc -->
 
-- [1. How to Deploy this Bot?](#1-how-to-deploy-this-bot)
-  - [1.1 Deploy in Local](#11-deploy-in-local)
-    - [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys)
-    - [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
-    - [1.1.3 Setup the Docker](#113-setup-the-docker)
-    - [1.1.4 Login your WeChat](#114-login-your-wechat)
-  - [1.2 Deploy on Cloud](#12-deploy-on-cloud)
-    - [1.2.1 Configure on `Railway`](#121-configure-on-railway)
-    - [1.2.2 Deploy \& Login on `Railway`](#122-deploy--login-on-railway)
-- [2. Any Fancy Advanced Settings?](#2-any-fancy-advanced-settings)
-  - [2.1 Config Reply in Error](#21-config-reply-in-error)
-  - [2.2 Config `OpenAI` Models](#22-config-openai-models)
-  - [2.3 Config Model Features](#23-config-model-features)
-  - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
-- [3. Common Errors and Troubleshooting](#3-common-errors-and-troubleshooting)
-  - [3.1 Assertion Error during Login or Self-chat 🤯](#31-assertion-error-during-login-or-self-chat-)
-  - [3.2 I can't trigger auto reply 🤔](#32-i-cant-trigger-auto-reply-)
-- [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
-- [Thanks for your support!](#thanks-for-your-support)
+- [ChatGPT on WeChat    ](#chatgpt-on-wechat----)
+  - [1. How to Deploy this Bot?](#1-how-to-deploy-this-bot)
+    - [1.1 Deploy in Local](#11-deploy-in-local)
+      - [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys)
+      - [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
+      - [1.1.3 Setup the Docker](#113-setup-the-docker)
+      - [1.1.4 Login your WeChat](#114-login-your-wechat)
+    - [1.2 Deploy on Cloud](#12-deploy-on-cloud)
+      - [1.2.1 Configure on `Railway`](#121-configure-on-railway)
+      - [1.2.2 Deploy \& Login on `Railway`](#122-deploy--login-on-railway)
+  - [2. Any Fancy Advanced Settings?](#2-any-fancy-advanced-settings)
+    - [2.1 Config Reply in Error](#21-config-reply-in-error)
+    - [2.2 Config `OpenAI` Models](#22-config-openai-models)
+    - [2.3 Config Model Features](#23-config-model-features)
+    - [2.4 Add Customized Task Handler](#24-add-customized-task-handler)
+  - [3. Common Errors and Troubleshooting](#3-common-errors-and-troubleshooting)
+    - [3.1 Assertion Error during Login or Self-chat 🤯](#31-assertion-error-during-login-or-self-chat-)
+    - [3.2 I can't trigger auto reply 🤔](#32-i-cant-trigger-auto-reply-)
+  - [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
+  - [Thanks for your support!](#thanks-for-your-support)
 
 ## 1. How to Deploy this Bot?
 
@@ -123,7 +124,7 @@ Fill in the following blanks:
 
 1. Your forked repo name (can be any name you like)
 2. Choose make it private or not (also up to you)
-3. Environment variables (for how to get OpenAI API keys, please refer to [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys)
+3. Environment variables (for how to get OpenAI API keys, please refer to [1.1.1 Get your OpenAI API Keys](#111-get-your-openai-api-keys))
 
 ![Railway Config](doc/img/Railway_config.png)
 
@@ -167,11 +168,15 @@ const chatgptErrorMessage = "🤖️：ChatGPT摆烂了，请稍后再试～";
 
 You can change whatever `OpenAI` Models you like to handle task at different capability, time-consumption and expense trade-off. (e.g. model with better capability costs more time to respond)
 
-Since the latest `gpt-4` model is currently in a limited beta and only accessible to those who have been granted access, currently we use the `gpt-3.5-turbo` model as default. Of course, if you have the access to `gpt-4` API, you can just change the model to `gpt-4` without any other modification.
+**Currently, the latest `GPT-4o` model is up and running!**
+
+~~Since the latest `gpt-4` model is currently in a limited beta and only accessible to those who have been granted access, currently we use the `gpt-3.5-turbo` model as default. Of course, if you have the access to `gpt-4` API, you can just change the model to `gpt-4` without any other modification.~~
 
 According to OpenAI doc,
 
-> GPT-3.5 models can understand and generate natural language or code. Our most capable and cost effective model in the GPT-3.5 family is `gpt-3.5-turbo` which has been optimized for chat but works well for traditional completions tasks as well.
+> GPT-4o (“o” for “omni”) is our most advanced model. It is multimodal (accepting text or image inputs and outputting text), and it has the same high intelligence as GPT-4 Turbo but is much more efficient—it generates text 2x faster and is 50% cheaper. Additionally, GPT-4o has the best vision and performance across non-English languages of any of our models.
+
+> ~~GPT-3.5 models can understand and generate natural language or code. Our most capable and cost effective model in the GPT-3.5 family is `gpt-3.5-turbo` which has been optimized for chat but works well for traditional completions tasks as well.~~
 
 Also, for the same model, we can configure dozens of parameter (e.g. answer randomness, maximum word limit...). For example, for the `temperature` field:
 
@@ -182,7 +187,7 @@ You can configure all of them in `src/chatgpt.js`:
 ```typescript
 chatgptModelConfig: object = {
   // this model field is required
-  model: "gpt-3.5-turbo",
+  model: "gpt-4o",
   // add your ChatGPT model parameters below
   temperature: 0.8,
   // max_tokens: 2000,
@@ -197,7 +202,7 @@ For more details, please refer to [OpenAI Models Doc](https://beta.openai.com/do
 
 You can change whatever features you like to handle different types of tasks. (e.g. complete text, edit text, generate code...)
 
-Currently, we use `createChatCompletion()` powered by `gpt-3.5-turbo` model, which:
+Currently, we use `createChatCompletion()` powered by `gpt-4o` model, which:
 
 > take a series of messages as input, and return a model-generated message as output.
 
