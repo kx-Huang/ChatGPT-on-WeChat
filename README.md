@@ -96,6 +96,8 @@ docker build -t chatgpt-on-wechat .
 docker run -v $(pwd)/config.yaml:/app/config.yaml chatgpt-on-wechat
 ```
 
+Thanks to user [@leoncsyang](https://github.com/leoncsyang) for fixing [Issue #81](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/81).
+
 ---
 
 #### 1.1.4 Login your WeChat
