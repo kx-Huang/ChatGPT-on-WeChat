@@ -36,7 +36,7 @@ This project is implemented based on [this amazing project](https://github.com/f
     - [3.1 Assertion Error during Login or Self-chat 🤯](#31-assertion-error-during-login-or-self-chat-)
     - [3.2 I can't trigger auto reply 🤔](#32-i-cant-trigger-auto-reply-)
   - [4. How to Contribute to this Project?](#4-how-to-contribute-to-this-project)
-  - [Acknowledgement](#acknowledgement)
+  - [5. Acknowledgement](#5-acknowledgement)
   - [Thanks for your support by starring this project!](#thanks-for-your-support-by-starring-this-project)
 
 ## 1. How to Deploy this Bot?
@@ -295,7 +295,7 @@ Also, there're something in the to-do list for future enhancement:
   - Make deployment templates on other cloud platforms
   - Optimize depolyment process to be more robust and compatible on different OS
 
-## Acknowledgement
+## 5. Acknowledgement
 
 Great thanks to:
 
@@ -307,7 +307,7 @@ Great thanks to:
 
 <p align="center">
   <a href="https://github.com/kx-Huang/ChatGPT-on-WeChat/stargazers">
-    <img src="https://reporoster.com/stars/dark/kx-Huang/ChatGPT-on-WeChat" alt="Stargazers repo roster for @kx-Huang/ChatGPT-on-WeChat" />
+    <img src="https://reporoster.com/stars/dark/notext/kx-Huang/ChatGPT-on-WeChat" alt="Stargazers repo roster for @kx-Huang/ChatGPT-on-WeChat" />
   </a>
   <a href="https://github.com/kx-Huang/ChatGPT-on-WeChat/stargazers">
     <img src="https://api.star-history.com/svg?repos=kx-Huang/ChatGPT-on-WeChat&type=Date" alt="Star history chart for @kx-Huang/ChatGPT-on-WeChat"/>
