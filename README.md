@@ -64,12 +64,12 @@ openaiOrganizationID: "<your_organization_id>"
 chatgptTriggerKeyword: "<your_keyword>"
 ```
 
-Or you can export the environment variables listed in `.env.sample` to your system, which is a more encouraged method to keep your `OpenAI API Key` safe:
+Or you can export the environment variables listed in `.env.example` to your system, which is a more encouraged method to keep your `OpenAI API Key` safe:
 
 ```bash
 export OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 export OPENAI_ORGANIZATION_KEY="org-XXXXXXXXXXXXXXX"
-export CHATGPT_TRIGGER_KEYWORD="机器人你好："
+export CHATGPT_TRIGGER_KEYWORD="Hi bot:"
 ```
 
 **Please note:**
