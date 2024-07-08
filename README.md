@@ -284,7 +284,7 @@ You are more than welcome to raise some issues, fork this repo, commit your code
 
 Also, there're something in the to-do list for future enhancement:
 
-1. Chat with context:
+1. Chat with context (integrate with [`LangChain`](https://github.com/langchain-ai/langchain)):
   - Keep track of every on-going conversation for each private chat or group chat
   - Dynamic drop or summarize the history conversation sent throught API in case the token gets oversized
   - Set time-out for a conversation when users stop chatting for a while
