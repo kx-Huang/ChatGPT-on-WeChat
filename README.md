@@ -24,9 +24,10 @@ This project is implemented based on [this amazing project](https://github.com/f
       - [1.1.2 Configure Environment Variables](#112-configure-environment-variables)
       - [1.1.3 Setup the Docker](#113-setup-the-docker)
       - [1.1.4 Login your WeChat](#114-login-your-wechat)
-    - [1.2 Deploy on Cloud](#12-deploy-on-cloud)
+    - [1.2 Deploy on Railway](#12-deploy-on-railway)
       - [1.2.1 Configure on `Railway`](#121-configure-on-railway)
       - [1.2.2 Deploy \& Login on `Railway`](#122-deploy--login-on-railway)
+    - [1.3 Deploy on Alibaba Cloud ComputeNest](#13-deploy-on-alibaba-cloud-computenest)
   - [2. Any Fancy Advanced Settings?](#2-any-fancy-advanced-settings)
     - [2.1 Config Reply in Error](#21-config-reply-in-error)
     - [2.2 Config `OpenAI` Models](#22-config-openai-models)
@@ -125,7 +126,7 @@ Once you deploy the bot successfully, just follow the `terminal` or `Logs` in Do
 
 ---
 
-### 1.2 Deploy on Cloud
+### 1.2 Deploy on Railway
 
 Click the button below to fork this repo and deploy with Railway!
 
@@ -161,9 +162,34 @@ Click `Deply Logs` and you will see everything is setting up, wait for a QR Code
 
 Finally, everything is good to go! You will see the logs when people sending you messagem, and whenever the chatbot is auto-triggered to reply.
 
-![Railway Log](doc/img/Railway_log.png)
+### 1.3 Deploy on Alibaba Cloud ComputeNest
 
-🤖 **Enjoy your powerful chatbot!** 🤖
+One-click deployment on Alibaba Cloud ComputeNest: 
+
+[![Deploy on AlibabaCloud ComputeNest](doc/img/deploy_to_computenest.svg)](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=ChatGPT-on-WeChat社区版)
+
+Follow the deployment guide to deploy ChatGPT-on-WeChat on Alibaba Cloud. Both domestic site and internationl sites are supported.
+- [Deployment Guide in English](https://computenest.console.aliyun.com/service/detail/ap-southeast-1/service-37a1f9f9b9e1482ba61b?isInstance=true)
+- [中文部署文档](https://computenest.console.aliyun.com/service/detail/cn-hangzhou/service-a81e49ab7dd24520a365?isInstance=true)
+
+First, provides cloud resource configurations such as ECS instance type and network configurations. 
+![ECS instance configuration](doc/img/computenest_resource_config.png)
+Also needs to set ChatGPT-On-WeChat software configuration.
+![ChatGPT-On-WeChat software configuration](doc/img/computenest_software_config.png)
+
+When you confirm to deploy, Alibaba Cloud ComputeNest creates ECS instance in your owner Alibaba Cloud account, deploys ChatGPT-on-WeChat application and starts it on ECS instance automatically. 
+
+After ComputeNest service instance is deployed, check "How to use" about how to login to ECS instance.
+
+![How to use](doc/img/computenest_how_to_use.png)
+
+Run command in ECS workbench to get the QR code.
+![QR code](doc/img/computenest_qr_code.png)
+
+Scan it as if you are login to your desktop WeChat, and click "Log in" on your mobile WeChat.
+
+Finally, everything is good to go! You will see the logs when people sending you messagem, and whenever the chatbot is auto-triggered to reply.
+
 
 ## 2. Any Fancy Advanced Settings?
 
