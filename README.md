@@ -169,8 +169,9 @@ One-click deployment on Alibaba Cloud ComputeNest:
 [![Deploy on AlibabaCloud ComputeNest](doc/img/deploy_to_computenest.svg)](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=ChatGPT-on-WeChat社区版)
 
 Follow the deployment guide to deploy ChatGPT-on-WeChat on Alibaba Cloud. Both domestic site and internationl sites are supported.
-- [Deployment Guide in English](https://computenest.console.aliyun.com/service/detail/ap-southeast-1/service-37a1f9f9b9e1482ba61b?isInstance=true)
-- [中文部署文档](https://computenest.console.aliyun.com/service/detail/cn-hangzhou/service-a81e49ab7dd24520a365?isInstance=true)
+- [Deployment Guide (domestic site)](https://computenest.console.aliyun.com/service/detail/cn-hangzhou/service-a81e49ab7dd24520a365?isInstance=true)
+- [Deployment Guide (internationl site)](https://computenest.console.aliyun.com/service/detail/ap-southeast-1/service-37a1f9f9b9e1482ba61b?isInstance=true)
+Switch Alibaba Cloud console's language to see guide in different language.
 
 First, provides cloud resource configurations such as ECS instance type and network configurations. 
 ![ECS instance configuration](doc/img/computenest_resource_config.png)
