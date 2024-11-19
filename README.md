@@ -329,6 +329,7 @@ Great thanks to:
 - [@leoncsyang](https://github.com/leoncsyang) for fixing [Issue #81](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/81)
 - [@hdfk7](https://github.com/hdfk7) for fixing [Issue #67](https://github.com/kx-Huang/ChatGPT-on-WeChat/issues/67)
 - [@jichangfeng](https://github.com/jichangfeng) for merging [PR #61](https://github.com/kx-Huang/ChatGPT-on-WeChat/pull/61)
+- [@wenle](https://github.com/wenle) for merging [PR #92](https://github.com/kx-Huang/ChatGPT-on-WeChat/pull/92), [PR #93](https://github.com/kx-Huang/ChatGPT-on-WeChat/pull/93)
 
 ## Thanks for your support by starring this project!
 
